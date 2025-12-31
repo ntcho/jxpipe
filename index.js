@@ -14,6 +14,10 @@
  * 4. Ensures a consistent root hierarchy to satisfy XML parsing requirements.
  */
 
+const CONFIG = {
+  CACHE_TTL: 3600 * 12, // 12 hours
+};
+
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -69,6 +73,7 @@ export default {
         headers: {
           "Content-Type": "application/xml",
           "X-Content-Type-Options": "nosniff",
+          "Cache-Control": `public, max-age=${CONFIG.CACHE_TTL}, s-maxage=${CONFIG.CACHE_TTL}`,
         },
       });
     } catch (error) {
