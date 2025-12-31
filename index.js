@@ -24,7 +24,11 @@ export default {
     }
 
     try {
-      const response = await fetch(targetUrl);
+      const response = await fetch(targetUrl, {
+        headers: {
+          "User-Agent": getUA(),
+        },
+      });
 
       // Ensure the source provides JSON before attempting to parse.
       // This prevents the worker from wasting resources on HTML or binary data
@@ -42,7 +46,7 @@ export default {
         return new Response(
           `Target API error: ${response.status} ${response.statusText}`,
           {
-          status: response.status,
+            status: response.status,
           }
         );
       }
@@ -122,4 +126,21 @@ function escapeXml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
+}
+
+/**
+ * Returns a random User-Agent string from a predefined list.
+ * This helps in mimicking real browser requests to avoid potential
+ * blocking by some APIs that restrict non-browser clients.
+ */
+function getUA() {
+  // Periodically update below from https://cdn.jsdelivr.net/gh/microlinkhq/top-user-agents@master/src/desktop.json
+  const uas = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+  ];
+  return uas[Math.floor(Math.random() * uas.length)];
 }
