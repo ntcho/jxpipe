@@ -1,0 +1,31 @@
+{
+  "name": "jxpipe",
+  "version": "1.0.0",
+  "description": "Lightweight Cloudflare Worker to proxy JSON APIs as XML.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntcho/jxpipe.git"
+  },
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev"
+  },
+  "keywords": [
+    "cloudflare-workers",
+    "json",
+    "xml",
+    "google-sheets"
+  ],
+  "author": "Nathan Cho <ntcho13@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ntcho/jxpipe/issues"
+  },
+  "homepage": "https://github.com/ntcho/jxpipe#readme",
+  "packageManager": "pnpm@10.27.0",
+  "dependencies": {
+    "wrangler": "^4.54.0"
+  }
+}
