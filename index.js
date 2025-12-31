@@ -40,9 +40,13 @@ export default {
       }
 
       if (!response.ok) {
-        return new Response(`Target API error: ${response.statusText}`, {
+        console.log(response);
+        return new Response(
+          `Target API error: ${response.status} ${response.statusText}`,
+          {
           status: response.status,
-        });
+          }
+        );
       }
 
       const json = await response.json();
@@ -66,6 +70,7 @@ export default {
         },
       });
     } catch (error) {
+      console.log(error);
       return new Response(`Worker Error: ${error.message}`, { status: 500 });
     }
   },
