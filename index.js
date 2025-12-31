@@ -26,11 +26,9 @@ export default {
     try {
       const response = await fetch(targetUrl);
 
-      /* 
-         Ensure the source provides JSON before attempting to parse.
-         This prevents the worker from wasting resources on HTML or binary data
-         that would eventually fail the JSON parsing step.
-      */
+      // Ensure the source provides JSON before attempting to parse.
+      // This prevents the worker from wasting resources on HTML or binary data
+      // that would eventually fail the JSON parsing step.
       const contentType = response.headers.get("Content-Type") || "";
       if (!contentType.includes("application/json")) {
         return new Response(
