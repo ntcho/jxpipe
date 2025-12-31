@@ -16,6 +16,42 @@ Google Sheets lacks a native `IMPORTJSON` function. By using `jxpipe`, you can c
 =IMPORTXML("https://your-worker.workers.dev/?url=" & ENCODEURL("https://api.example.com/data"), "//root/item")
 ```
 
+### Google Sheets Named Function
+
+To simplify usage, you can define a custom function within Google Sheets.
+
+#### How to create a named function
+
+1. In Google Sheets, go to **Data** > **Named functions**.
+2. Click **Add new function**.
+3. Enter the details provided below and click **Next** then **Create**.
+
+#### Function Definition
+
+* **Function name**: `JXPIPE`
+* **Function description**: Fetches JSON data via jxpipe and parses it using XPath.
+* **Argument placeholders**: `json_url`, ``
+* **Formula definition**:
+
+    ```excel
+    =IMPORTXML("https://your-worker-name.workers.dev/?url=" & ENCODEURL(json_url), xpath)
+    ```
+
+#### Additional Details
+
+* **json_url**:
+  * Description: The full URL of the source JSON API.
+  * Example: `"https://api.github.com/repos/ntcho/jxpipe"`
+* **xpath**:
+  * Description: The XML path to the desired data.
+  * Example: `"//root/name"` or `"//root/item"`
+
+#### Usage Example
+
+```excel
+=JXPIPE("https://api.example.com/data.json", "//root/item/id")
+```
+
 ## Roadmap
 
 * **Method Support**: Support for POST and other HTTP verbs.
