@@ -28,10 +28,17 @@ export default {
     }
 
     try {
+      const headers = new Headers(request.headers);
+      headers.delete("host");
+
+      // Use a random User-Agent if the incoming request doesn't specify one
+      if (!headers.has("User-Agent")) {
+        headers.set("User-Agent", getUA());
+      }
+
       const response = await fetch(targetUrl, {
-        headers: {
-          "User-Agent": getUA(),
-        },
+        method: request.method,
+        headers: headers,
       });
 
       // Ensure the source provides JSON before attempting to parse.
